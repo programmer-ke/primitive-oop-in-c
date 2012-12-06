@@ -1,23 +1,39 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "myanimals.h"
 
 void Human_move(void *self, int steps)
 {
+  assert(self != NULL);
   printf("walkes %d strides\n", steps);
 }
 
 void Human_sound(void *self)
 {
+  assert(self != NULL);
   printf("Talks\n");
 }
 
 int Human_init(void *self, const char *species)
 {
+  assert(self != NULL);
   Human *h = self;
   h->species = strdup(species);
-  return 1;
+  if (h->species == NULL)
+    return 0;
+  else
+    return 1;
+}
+
+void Human_destroy(void *self)
+{
+  Human *this = self;
+  if (this) {
+    if (this->species) free(this->species);
+    Animal_destroy(this);
+  }
 }
 
 Animal HumanProto = {
@@ -27,20 +43,36 @@ Animal HumanProto = {
 
 void Duck_move(void *self, int steps)
 {
+  assert(self != NULL);
   printf("wobbles %d steps\n", steps);
 }
 
 void Duck_sound(void *self)
 {
+  assert(self != NULL);
   printf("Quacks");
 }
 
 int Duck_init(void *self, const char *species)
 {
+  assert(self != NULL);
   Duck *d = self;
   d->species = strdup(species);
-  return 1;
+  if (d->species == NULL)
+    return 0;
+  else 
+    return 1;
 }
+
+void Duck_destroy(void *self)
+{
+  Duck *this = self;
+  if (this) {
+    if (this->species) free(this->species);
+    Animal_destroy(this);
+  }
+}
+
 
 Animal DuckProto = {
   .move = Duck_move,
@@ -62,5 +94,9 @@ int main()
   printf("%s ", duck->species);
   duck->proto.move(duck, 5);
   duck->proto.make_sound(duck);
+  printf("\n");
+  animal->destroy(animal);
+  duck->proto.destroy(duck);
+  human->proto.destroy(human);
   return 0;
 }
