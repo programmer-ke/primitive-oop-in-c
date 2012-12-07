@@ -28,6 +28,7 @@ int Human_init(void *self, const char *species)
   h = self;
   h->species = strdup(species);
   check_mem(h->species);
+  log_info("Initialized object human");
   return 1;
  error:
   if (h->species) free(h->species);
@@ -41,6 +42,7 @@ void Human_destroy(void *self)
     if (this->species) free(this->species);
     Animal_destroy(this);
   }
+  log_info("Destroyed object human");
 }
 
 Animal HumanProto = {
@@ -73,6 +75,7 @@ int Duck_init(void *self, const char *species)
   d = self;
   d->species = strdup(species);
   check_mem(d->species);
+  log_info("Initialized object duck.");
   return 1;
  error:
   if (d->species) free(d->species);
@@ -86,6 +89,7 @@ void Duck_destroy(void *self)
     if (this->species) free(this->species);
     Animal_destroy(this);
   }
+  log_info("Destroyed object Duck.");
 }
 
 

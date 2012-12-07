@@ -30,6 +30,7 @@ void Animal_destroy(void *self)
     if (this->description) free(this->description);
     free(this);
   }
+  log_info("Destroyed object animal.");
 }
 
 int Animal_init(void *self, const char *description)
@@ -38,6 +39,7 @@ int Animal_init(void *self, const char *description)
   Animal *this = self; 
   this->description = strdup(description);
   check_mem(this->description);
+  log_info("Initialized object animal.");
   return 1;
  error:
   if (this->description) free(this->description);
@@ -60,6 +62,7 @@ void *Animal_new(Animal proto, size_t size, const char *description)
 
   initval = animal->init(animal, description);
   check(initval, "Could not initiate %s", description);
+  log_info("Created object.");
   return animal;
  error:
   if (animal) {
