@@ -39,7 +39,9 @@ void Human_destroy(void *self)
 Animal HumanProto = {
   .init = Human_init,
   .make_sound = Human_sound,
-  .move = Human_move };
+  .move = Human_move,
+  .destroy = Human_destroy
+};
 
 void Duck_move(void *self, int steps)
 {
@@ -77,7 +79,9 @@ void Duck_destroy(void *self)
 Animal DuckProto = {
   .move = Duck_move,
   .make_sound = Duck_sound,
-  .init = Duck_init };
+  .init = Duck_init,
+  .destroy = Duck_destroy
+};
 
 int main()
 {
