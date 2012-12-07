@@ -3,28 +3,35 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "myanimals.h"
+#include "dbg.h"
 
 void Human_move(void *self, int steps)
 {
-  assert(self != NULL);
+  check(self != NULL, "self is NULL");
   printf("walkes %d strides\n", steps);
+ error:
+  ;
 }
 
 void Human_sound(void *self)
 {
-  assert(self != NULL);
+  check(self != NULL, "self is NULL");
   printf("Talks\n");
+ error:
+  ;
 }
 
 int Human_init(void *self, const char *species)
 {
-  assert(self != NULL);
-  Human *h = self;
+  Human *h = NULL;
+  check(self != NULL, "self is NULL");
+  h = self;
   h->species = strdup(species);
-  if (h->species == NULL)
-    return 0;
-  else
-    return 1;
+  check_mem(h->species);
+  return 1;
+ error:
+  if (h->species) free(h->species);
+  return 0;
 }
 
 void Human_destroy(void *self)
@@ -45,25 +52,31 @@ Animal HumanProto = {
 
 void Duck_move(void *self, int steps)
 {
-  assert(self != NULL);
+  check(self != NULL, "self is NULL.");
   printf("wobbles %d steps\n", steps);
+ error:
+  ;
 }
 
 void Duck_sound(void *self)
 {
-  assert(self != NULL);
+  check(self != NULL, "self is NULL.");
   printf("Quacks");
+ error:
+  ;
 }
 
 int Duck_init(void *self, const char *species)
 {
-  assert(self != NULL);
-  Duck *d = self;
+  Duck *d = NULL;
+  check(self != NULL, "self is NULL");
+  d = self;
   d->species = strdup(species);
-  if (d->species == NULL)
-    return 0;
-  else 
-    return 1;
+  check_mem(d->species);
+  return 1;
+ error:
+  if (d->species) free(d->species);
+  return 0;
 }
 
 void Duck_destroy(void *self)
